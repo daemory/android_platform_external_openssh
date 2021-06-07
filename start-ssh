@@ -4,6 +4,14 @@ umask 077
 
 # DEBUG=1
 
+SSH_DIR=/data/ssh
+mkdir -p $SSH_DIR
+
+SSH_EMPTY_DIR=/var/run/ssh/empty
+mkdir -p $SSH_EMPTY_DIR
+chmod 755 $SSH_EMPTY_DIR
+chown root:root $SSH_EMPTY_DIR
+
 DSA_KEY=/data/ssh/ssh_host_dsa_key
 DSA_PUB_KEY=/data/ssh/ssh_host_dsa_key.pub
 RSA_KEY=/data/ssh/ssh_host_rsa_key

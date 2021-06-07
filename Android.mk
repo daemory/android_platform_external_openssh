@@ -125,6 +125,8 @@ LOCAL_MODULE := libssh
 
 LOCAL_CFLAGS+=-O3 -Wno-unused-parameter
 
+LOCAL_CFLAGS+=-Wno-sign-compare -Wno-pointer-sign -Wno-incompatible-pointer-types
+
 LOCAL_CFLAGS += -DGCE_PLATFORM_SDK_VERSION=$(PLATFORM_SDK_VERSION)
 ifneq ($(filter gce_x86 calypso, $(TARGET_DEVICE)),)
 LOCAL_CFLAGS += -DANDROID_GCE -DSSHDIR=\"/var/run/ssh\"
@@ -258,6 +260,8 @@ LOCAL_SRC_FILES := \
 LOCAL_MODULE := sshd
 
 LOCAL_CFLAGS += -Wno-unused-parameter
+
+LOCAL_CFLAGS += -Wno-unused-variable
 
 LOCAL_C_INCLUDES := \
     external/zlib \

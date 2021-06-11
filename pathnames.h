@@ -18,6 +18,10 @@
 #define SSHDIR				ETCDIR "/ssh"
 #endif
 
+#ifdef SSHRUNDIR
+#define _PATH_SSH_PIDDIR SSHRUNDIR
+#endif
+
 #ifndef _PATH_SSH_PIDDIR
 #define _PATH_SSH_PIDDIR		"/var/run"
 #endif

@@ -1,5 +1,22 @@
 LOCAL_PATH:= $(call my-dir)
 
+#add ssh directory
+SSHDIR := /data/ssh
+ifneq (,$(SSHDIR))
+COMMON_LOCAL_CFLAGS += -DSSHDIR=\"$(SSHDIR)\"
+endif
+
+#add ssh run directory
+SSHRUNDIR := /data/ssh/run
+ifneq (,$(SSHRUNDIR))
+COMMON_LOCAL_CFLAGS += -DSSHRUNDIR=\"$(SSHRUNDIR)\"
+endif
+
+LASTLOG_FILE := /data/ssh/log/lastlog
+ifneq (,$(LASTLOG_FILE))
+COMMON_LOCAL_CFLAGS += -DLASTLOG_FILE=\"$(LASTLOG_FILE)\"
+endif
+
 ###################### libssh ######################
 include $(CLEAR_VARS)
 
@@ -132,9 +149,10 @@ ifneq ($(filter gce_x86 calypso, $(TARGET_DEVICE)),)
 LOCAL_CFLAGS += -DANDROID_GCE -DSSHDIR=\"/var/run/ssh\"
 endif
 
-ifneq (,$(SSHDIR))
-LOCAL_CFLAGS += -DSSHDIR=\"$(SSHDIR)\"
-endif
+#ifneq (,$(SSHDIR))
+#LOCAL_CFLAGS += -DSSHDIR=\"$(SSHDIR)\"
+#endif
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -152,6 +170,8 @@ LOCAL_MODULE := ssh
 
 
 LOCAL_CFLAGS += -Wno-unused-parameter
+
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
 
 LOCAL_C_INCLUDES := \
     external/zlib \
@@ -175,6 +195,8 @@ LOCAL_MODULE := sftp
 
 LOCAL_CFLAGS += -Wno-unused-parameter
 
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
+
 LOCAL_C_INCLUDES := \
     external/zlib \
     external/openssl/include \
@@ -196,6 +218,8 @@ LOCAL_SRC_FILES := \
 LOCAL_MODULE := scp
 
 LOCAL_CFLAGS += -Wno-unused-parameter
+
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
 
 LOCAL_C_INCLUDES := \
     external/zlib \
@@ -263,6 +287,8 @@ LOCAL_CFLAGS += -Wno-unused-parameter
 
 LOCAL_CFLAGS += -Wno-unused-variable
 
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
+
 LOCAL_C_INCLUDES := \
     external/zlib \
     external/openssl/include \
@@ -284,6 +310,8 @@ LOCAL_SRC_FILES := \
 LOCAL_MODULE := ssh-keygen
 
 LOCAL_CFLAGS += -Wno-unused-parameter
+
+LOCAL_CFLAGS += $(COMMON_LOCAL_CFLAGS)
 
 LOCAL_C_INCLUDES := \
     external/zlib \

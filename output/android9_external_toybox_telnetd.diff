@@ -1,0 +1,70 @@
+diff --git a/boringssl/src/include/openssl/opensslconf.h b/boringssl/src/include/openssl/opensslconf.h
+index 3c6ffd8be..4dfb9dfcf 100644
+--- a/boringssl/src/include/openssl/opensslconf.h
++++ b/boringssl/src/include/openssl/opensslconf.h
+@@ -20,12 +20,16 @@
+ 
+ 
+ #define OPENSSL_NO_ASYNC
++#ifndef OPENSSL_NO_BF
+ #define OPENSSL_NO_BF
++#endif
+ #define OPENSSL_NO_BLAKE2
+ #define OPENSSL_NO_BUF_FREELISTS
+ #define OPENSSL_NO_CAMELLIA
+ #define OPENSSL_NO_CAPIENG
++#ifndef OPENSSL_NO_CAST
+ #define OPENSSL_NO_CAST
++#endif
+ #define OPENSSL_NO_CMS
+ #define OPENSSL_NO_COMP
+ #define OPENSSL_NO_CT
+diff --git a/toybox/Android.mk b/toybox/Android.mk
+index 5d8d2e444..b0872120f 100644
+--- a/toybox/Android.mk
++++ b/toybox/Android.mk
+@@ -153,6 +153,8 @@ common_SRC_FILES := \
+     toys/pending/getfattr.c \
+     toys/pending/gzip.c \
+     toys/pending/lsof.c \
++    toys/pending/telnet.c \
++    toys/pending/telnetd.c \
+     toys/pending/modprobe.c \
+     toys/pending/more.c \
+     toys/pending/stty.c \
+@@ -233,6 +235,7 @@ common_CFLAGS := \
+     -funsigned-char \
+     -ffunction-sections -fdata-sections \
+     -fno-asynchronous-unwind-tables \
++    -Wno-implicit-function-declaration \
+ 
+ ifeq (yes,$(strip $(MTK_SPM_TELEPHONY_NATIVE)))
+ common_CFLAGS += -DMTK_SPM_TELEPHONY_NATIVE
+@@ -375,6 +378,8 @@ ALL_TOOLS := \
+     tar \
+     taskset \
+     tee \
++    telnet \
++    telnetd \
+     time \
+     timeout \
+     top \
+diff --git a/toybox/generated/config.h b/toybox/generated/config.h
+index 79da5e6e1..e5160baf1 100644
+--- a/toybox/generated/config.h
++++ b/toybox/generated/config.h
+@@ -542,10 +542,10 @@
+ #define USE_TCPSVD(...)
+ #define CFG_TEE 1
+ #define USE_TEE(...) __VA_ARGS__
+-#define CFG_TELNETD 0
+-#define USE_TELNETD(...)
+-#define CFG_TELNET 0
+-#define USE_TELNET(...)
++#define CFG_TELNETD 1
++#define USE_TELNETD(...) __VA_ARGS__
++#define CFG_TELNET 1
++#define USE_TELNET(...) __VA_ARGS__
+ #define CFG_TEST_HUMAN_READABLE 0
+ #define USE_TEST_HUMAN_READABLE(...)
+ #define CFG_TEST 0

@@ -1583,7 +1583,11 @@
 #define _PATH_PASSWD_PROG "/usr/bin/passwd"
 
 /* Specify location of ssh.pid */
+#ifndef SSHRUNDIR
 #define _PATH_SSH_PIDDIR "/var/run"
+#else
+#define _PATH_SSH_PIDDIR SSHRUNDIR
+#endif
 
 /* Define if we don't have struct __res_state in resolv.h */
 /* #undef __res_state */

@@ -7,15 +7,18 @@ umask 077
 SSH_DIR=/data/ssh
 mkdir -p $SSH_DIR
 
-SSH_EMPTY_DIR=/var/run/ssh/empty
+SSH_EMPTY_DIR=${SSH_DIR}/empty
 mkdir -p $SSH_EMPTY_DIR
 chmod 755 $SSH_EMPTY_DIR
 chown root:root $SSH_EMPTY_DIR
 
-SSH_LOG_FILE=/var/log/lastlog
-SSH_LOG_DIR=/var/log
+SSH_RUN_DIR=${SSH_DIR}/run
+mkdir -p $SSH_RUN_DIR
+
+SSH_LOG_DIR=${SSH_DIR}/log
+SSH_LOG_FILE=${SSH_LOG_DIR}/lastlog
 mkdir -p $SSH_LOG_DIR
-touch /var/log/lastlog
+touch ${SSH_LOG_FILE}
 
 DSA_KEY=/data/ssh/ssh_host_dsa_key
 DSA_PUB_KEY=/data/ssh/ssh_host_dsa_key.pub
@@ -23,6 +26,8 @@ RSA_KEY=/data/ssh/ssh_host_rsa_key
 RSA_PUB_KEY=/data/ssh/ssh_host_rsa_key.pub
 AUTHORIZED_KEYS=/data/ssh/authorized_keys
 DEFAULT_AUTHORIZED_KEYS=/system/etc/security/authorized_keys.default
+
+touch $AUTHORIZED_KEYS
 
 if [ ! -f $DSA_KEY ]; then
     /system/bin/ssh-keygen -t dsa -f $DSA_KEY -N ""
